@@ -1,0 +1,50 @@
+dn: o=test
+objectClass: organization
+objectClass: nisDomainObject
+o: test
+nisDomain: test
+
+dn: ou=users,o=test
+objectClass: organizationalUnit
+ou: users
+
+dn: ou=groups,o=test
+objectClass: organizationalUnit
+ou: groups
+
+dn: ou=netgroups,o=test
+objectClass: organizationalUnit
+ou: netgroups
+
+dn: ou=services,o=test
+objectClass: organizationalUnit
+ou: services
+
+dn: ou=proxies,o=test
+objectClass: organizationalUnit
+ou: proxies
+
+dn: cn=proxy,ou=proxies,o=test
+objectClass: applicationProcess
+objectClass: simpleSecurityObject
+cn: proxy
+userPassword: proxy
+
+dn: ou=profile,o=test
+objectClass: organizationalUnit
+ou: profile
+
+dn: cn=default,ou=profile,o=test
+objectClass: DUAConfigProfile
+cn: default
+credentialLevel: proxy
+defaultSearchBase: o=test
+defaultSearchScope: sub
+defaultServerList: ldaptesting.example.com
+profileTTL: 30
+serviceSearchDescriptor: passwd:ou=users,o=test?sub
+serviceSearchDescriptor: shadow:ou=users,o=test?sub
+serviceSearchDescriptor: group:ou=groups,o=test?sub
+serviceSearchDescriptor: netgroup:ou=netgroups,o=test?sub
+authenticationMethod: simple
+

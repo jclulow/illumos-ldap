@@ -1,0 +1,75 @@
+dn: cn=config
+objectClass: olcGlobal
+cn: config
+olcServerID: 0
+
+dn: cn=schema,cn=config
+objectClass: olcSchemaConfig
+cn: schema
+
+include: file:///data/ldap/schema/core.ldif
+include: file:///data/ldap/schema/ppolicy.ldif
+include: file:///data/ldap/schema/cosine.ldif
+include: file:///data/ldap/schema/inetorgperson.ldif
+include: file:///data/ldap/schema/nis.ldif
+include: file:///data/ldap/schema/illumos.ldif
+
+dn: olcDatabase={-1}frontend,cn=config
+objectClass: olcDatabaseConfig
+objectClass: olcFrontendConfig
+olcDatabase: {-1}frontend
+olcRootDN: cn=root
+olcAccess: to * by * read
+
+dn: olcDatabase={0}config,cn=config
+objectClass: olcDatabaseConfig
+olcDatabase: {0}config
+olcRootDN: cn=root
+olcAccess: to * by * none
+
+#
+# Dummy LDIF database that exists just so that "cn=root" can be the directory
+# manager account.
+#
+dn: olcDatabase={1}ldif,cn=config
+objectClass: olcDatabaseConfig
+objectClass: olcLdifConfig
+olcDatabase: {1}ldif
+olcSuffix: cn=root
+olcRootDN: cn=root
+olcRootPW: secret
+olcDbDirectory:	/var/empty
+olcAccess: to * by * none
+
+#
+# The primary database for directory data.
+#
+dn: olcDatabase={2}mdb,cn=config
+objectClass: olcDatabaseConfig
+objectClass: olcMdbConfig
+olcDatabase: {2}mdb
+olcSuffix: o=test
+olcRootDN: cn=root
+olcDbDirectory:	/data/ldap/db
+olcAccess: to attrs=userPassword
+  by self write
+  by anonymous auth
+  by * none
+olcAccess: to *
+  by * read
+olcDbIndex: objectClass eq
+olcDbIndex: uid eq
+olcDbIndex: cn eq
+olcDbIndex: uidNumber eq
+olcDbIndex: gidNumber eq
+olcDbIndex: memberUid eq
+
+#
+# Force hashing of the "userPassword" attribute.
+#
+dn: olcOverlay={0}ppolicy,olcDatabase={2}mdb,cn=config
+objectClass: olcOverlayConfig
+objectClass: olcPPolicyConfig
+olcOverlay: {0}ppolicy
+olcPPolicyHashCleartext: TRUE
+
