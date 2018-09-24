@@ -20,6 +20,8 @@ the root directory for OpenLDAP data.
   into the `/data/ldap/schema` directory; e.g.,
   `/data/ldap/schema/cosine.ldif`, etc.
 
+* Add in [schema/illumos.ldif](schema/illumos.ldif) from this repository.
+
 * Ensure an empty `/var/empty` directory exists, owned `root:root` with mode
   `0755`.
 
@@ -28,7 +30,8 @@ the root directory for OpenLDAP data.
 We will use the dynamic runtime configuration engine, where directory server
 configuration is itself stored in the LDAP database under `cn=config`.  First,
 we need to produce an LDIF file with the initial contents of the configuration
-database.  See [config.ldif](config.ldif) in this directory.
+database.  See [bootstrap/config.ldif](bootstrap/config.ldif) in this
+directory.
 
 Install this file at `/data/ldap/bootstrap/config.ldif`, then:
 
@@ -70,8 +73,8 @@ database.
 
 ## Initial Directory Contents
 
-Once your LDAP server is running, you should be able to load the sample contents
-from [dit.ldif](dit.ldif):
+Once your LDAP server is running, you should be able to load the sample
+contents from [bootstrap/dit.ldif](bootstrap/dit.ldif):
 
 ```
 ldapadd -x -h ldaptesting.example.com -D cn=root -w secret -f dit.ldif
