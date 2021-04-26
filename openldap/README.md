@@ -148,3 +148,10 @@ NS_LDAP_SERVICE_SEARCH_DESC= shadow:ou=users,o=test?sub
 NS_LDAP_SERVICE_SEARCH_DESC= group:ou=groups,o=test?sub
 NS_LDAP_SERVICE_SEARCH_DESC= netgroup:ou=netgroups,o=test?sub
 ```
+
+## Licence
+
+The schema files in this repository are composed of information contained in
+specifications and RFCs for the purposes of interoperation between systems.
+You can use the schema files in this repository for any purpose without
+restriction.
